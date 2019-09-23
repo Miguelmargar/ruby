@@ -2,6 +2,9 @@
 # ALBUM
 # Copyright Mark Keane, All Rights Reserved, 2014
 
+require 'csv'
+require 'time'
+
 # Class that encodes details of an album.
 class Album
 	attr_accessor :name, :tracks, :length, :artist, :owners, :id
@@ -36,7 +39,20 @@ class Album
   # builds a single album, given the name of that album.
 
 	def self.build_all(albums = [])
-	p "oops...this is missing   ;-)"
+		alb_names = []
+		CSV.foreach("songs.csv", :headers => true) do |row|
+			if (row[0][0] == '#')
+				next
+			end
+			if !alb_names.include? row[2]
+				then alb_names << row[2]
+			end
+		end
+
+		alb_names.each do |name|
+			albums << build_an_album_called(name)
+		end
+		return albums		
 	end
 
   # Class method that takes an album name, it finds all the sounds that are in that album
@@ -44,8 +60,6 @@ class Album
   # to populate the various attributes of the album object.
 
 	def self.build_an_album_called(album_name)
-		require 'csv'
-		require 'time'
 		name = album_name
 		tracks = 0
 		len_secs = 0
@@ -72,7 +86,9 @@ class Album
 
 end
 
-Album.build_an_album_called("Perfect Day")
+p Album.build_an_album_called("Perfect Day")
+puts
+p Album.build_all()
 
 
 
