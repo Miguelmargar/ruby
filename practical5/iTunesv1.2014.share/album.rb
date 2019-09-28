@@ -66,7 +66,7 @@ class Album
 		artist = ""
 		owners = 0
 
-     		CSV.foreach("songs.csv", :headers => true) do |row|
+		CSV.foreach("songs.csv", :headers => true) do |row|
 			if (row[0][0] == '#')
 				next
 			end

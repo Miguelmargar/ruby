@@ -22,4 +22,27 @@ class MyErr
 		end
 	end
 	
+	def self.check_ids(songs_file, owners_file)
+	    songsIds = []
+        CSV.foreach(songs_file, :headers => true) do |row|
+            unless (row[0][0] == "#")
+                if !songsIds.include?(row[4])
+                    then songsIds << row[4]
+                elsif songsIds.include?(row[4])
+                    then p("Song ID maybe duplicated - check songs.csv file")
+                end
+            end
+         end
+
+         CSV.foreach(owners_file, :headers => true) do |row|
+            unless (row[0][0] == "#")
+                id = row[0]
+                if !songsIds.include?(id)
+                    then p("Wrong ID number #{id} as it is not in songs.csv file")
+                        return false
+                end
+            end
+	     end
+	end
+
 end

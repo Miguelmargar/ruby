@@ -27,32 +27,36 @@ $hash_owners = reader.read_in_ownership(owners_file)
 puts "Building all owners..."
 $actors = Actor.build_all()
 
-puts "Updating songs with ownership details..."
-$songs.each{|song| song.owners = $hash_owners[song.id]}
-
-puts "Building All Albums..."
-$albums = Album.build_all()
-
-# Given the name of a song and a person; let them buy the song
-puts "\nMarkk buys The Cure..."
-song1 = Util.fetch("The Cure")
-mark =   Util.fetch("markk")
-mark.to_s
-song1.to_s
-mark.buys_song(song1)
-song1.to_s
-
-# What songs does Markk own
-puts "\nHow many songs does Markk own..."
-p mark.what_songs_does_he_own().size
-
-puts "\nPlay The Cure..."
-song1.play_song
-
-# Print out all songs
-puts "\nPrinting full details of all songs..."
-$songs.each{|song| p song}
-
-# Call it like this in the command line.
-# markkean% ruby itunes.rb songs.csv owners.csv
-
+puts "Checking song ownership details..."
+if MyErr.check_ids(songs_file, owners_file)
+    then
+        puts "Updating songs with ownership details..."
+        $songs.each{|song| song.owners = $hash_owners[song.id]}
+        
+        puts "Building All Albums..."
+        $albums = Album.build_all()
+        
+        # Given the name of a song and a person; let them buy the song
+        puts "\nMarkk buys The Cure..."
+        song1 = Util.fetch("The Cure")
+        mark =   Util.fetch("markk")
+        mark.to_s
+        song1.to_s
+        mark.buys_song(song1)
+        song1.to_s
+        
+        # What songs does Markk own
+        puts "\nHow many songs does Markk own..."
+        p mark.what_songs_does_he_own().size
+        
+        puts "\nPlay The Cure..."
+        song1.play_song
+        
+        # Print out all songs
+        puts "\nPrinting full details of all songs..."
+        $songs.each{|song| p song}
+        
+        # Call it like this in the command line.
+        # markkean% ruby itunes.rb songs.csv owners.csv
+else p("Please check files for correct songs and ownership details")
+end

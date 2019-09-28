@@ -26,7 +26,7 @@ class Reader
 		  song_id, owner_data = row[0], row[1]
 	 	  unless (song_id =~ /#/)
 	 	 	     temp_hash[song_id] = owner_data
-	 	      end
+	 	  end
     end
     temp_hash
 	end

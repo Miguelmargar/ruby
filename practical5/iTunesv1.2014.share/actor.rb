@@ -16,8 +16,8 @@ class Actor
 	end	
 	
 	# Method that checks if an object given to it is an actor.
-  def isa?
-		instance_of?(Actor)
+	def isa?
+	    instance_of?(Actor)
 	end
 	
 	# Class method that builds all the actor objects using names originally from owners.csv.
@@ -25,18 +25,18 @@ class Actor
   # the song-ids and reduce it to an array of unique owner-name strings. We then use these to build
   # actor obejcts using Actor.new.  The method returns an array of actor-objects.
 
-  def self.build_all(actors = [])
-		actor_names = $hash_owners.values.clean_up
-		actor_names.each {|name| actors << Actor.new(name)}
-		actors
-	end
+    def self.build_all(actors = [])
+        actor_names = $hash_owners.values.clean_up
+        actor_names.each {|name| actors << Actor.new(name)}
+        actors
+    end
 
   # Method that takes an actor and allows him/her/it to buy a song; by just adding the persons name to the song.
   # Obviously, this should be more complicated, like it should write something to owners.csv too.
 
 	def buys_song(song)
 		song.owners <<  (" " + @name)
-  end
+	end
 
   # Method that takes an actor finds all the songs owned by the actor.
   # It returns a array of song objects.
